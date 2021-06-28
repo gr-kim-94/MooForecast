@@ -11,13 +11,18 @@ import CoreLocation
 class ViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    var topInset = CGFloat(0.0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        let location = CLLocation(latitude: 37.498206, longitude: 127.02761)
-        WeatherDataSource.shared.fetch(location: location) {
+        LocationManager.shared.updateLocation()
+        
+        NotificationCenter.default.addObserver(forName: WeatherDataSource.weatherInfoDidUpdate, object: nil, queue: .main) { _ in
+            self.titleLabel.text = LocationManager.shared.currentLocationTitle
             self.tableView.reloadData()
         }
     }
