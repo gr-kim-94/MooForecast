@@ -23,10 +23,28 @@ class ForecastTableViewCell: UITableViewCell {
     }
     
     func setData(forecast: ForecastData) {
+        self.setIcon(icon: forecast.icon)
+        
         self.dateLabel.text = forecast.date.dateString
         self.timeLabel.text = forecast.date.timeString
-        self.weatherImageView.image = UIImage(named: forecast.icon)
         self.statusLabel.text = forecast.weather
         self.temperatureLabel.text = forecast.temperature.temperatureString
+    }
+    
+    func setIcon(icon: String) {
+        self.weatherImageView.image = nil
+        
+        let urlString = APIManager().forecastIconUrl + icon + ".png"
+        if let url = URL(string: urlString) {
+            let task = URLSession.shared.dataTask(with: url) { data, response, error in
+                guard let data = data, error == nil else { return }
+                
+                DispatchQueue.main.async {
+                    self.weatherImageView.image = UIImage(data: data)
+                }
+            }
+            
+            task.resume()
+        }
     }
 }

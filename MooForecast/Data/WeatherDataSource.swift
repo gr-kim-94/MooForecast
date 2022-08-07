@@ -13,60 +13,49 @@ class WeatherDataSource {
     private init() {
         NotificationCenter.default.addObserver(forName: LocationManager.currentLocationDidUpdate, object: nil, queue: .main) { (noti) in
             if let location = noti.userInfo?["location"] as? CLLocation {
-                self.fetch(location: location) {
-                    NotificationCenter.default.post(name: WeatherDataSource.weatherInfoDidUpdate, object: nil)
-                }
+                self.fetch(location: location)
             }
         }
     }
     
     static let weatherInfoDidUpdate = Notification.Name.init(rawValue: "weatherInfoDidUpdate")
     
-    var summary: CurrentWeather?
-    var forecastList = [ForecastData]()
+    var summary: CurrentWeather? {
+        didSet {
+            NotificationCenter.default.post(name: WeatherDataSource.weatherInfoDidUpdate, object: nil)
+        }
+    }
     
-    let apiQueue = DispatchQueue(label: "ApiQueue", attributes: .concurrent)
+    var forecastList = [ForecastData]() {
+        didSet {
+            NotificationCenter.default.post(name: WeatherDataSource.weatherInfoDidUpdate, object: nil)
+        }
+    }
     
-    let group = DispatchGroup()
-    func fetch(location: CLLocation, completion: @escaping () -> ()) {
-        group.enter()
-        apiQueue.async {
-            self.fetchCurrentWeather(location: location) { (result) in
-                switch result {
-                case .success(let data):
-                    self.summary = data
-                default:
-                    self.summary = nil
-                }
-                
-                self.group.leave()
+    func fetch(location: CLLocation) {
+        self.fetchCurrentWeather(location: location) { (result) in
+            switch result {
+            case .success(let data):
+                self.summary = data
+            default:
+                self.summary = nil
             }
         }
-        
-        group.enter()
-        apiQueue.async {
-            self.fetchForecast(location: location) { (result) in
-                switch result {
-                case .success(let data):
-                    self.forecastList = data.list.map {
-                        let dt = Date(timeIntervalSince1970: TimeInterval($0.dt))
-                        let icon = $0.weather.first?.icon ?? ""
-                        let weather = $0.weather.first?.description ?? "정보 없음"
-                        let temperature = $0.main.temp
-                        
-                        return ForecastData(date: dt, icon: icon, weather: weather, temperature: temperature)
-                    }
+        self.fetchForecast(location: location) { (result) in
+            switch result {
+            case .success(let data):
+                self.forecastList = data.list.map {
+                    let dt = Date(timeIntervalSince1970: TimeInterval($0.dt))
+                    let icon = $0.weather.first?.icon ?? ""
+                    let weather = $0.weather.first?.description ?? "정보 없음"
+                    let temperature = $0.main.temp
                     
-                default:
-                    self.forecastList = []
+                    return ForecastData(date: dt, icon: icon, weather: weather, temperature: temperature)
                 }
                 
-                self.group.leave()
+            default:
+                self.forecastList = []
             }
-        }
-        
-        group.notify(queue: .main) {
-            completion()
         }
     }
 }
