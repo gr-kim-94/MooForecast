@@ -21,7 +21,7 @@ class WeatherDataSource {
     }
     
     static let weatherInfoDidUpdate = Notification.Name.init(rawValue: "weatherInfoDidUpdate")
-        
+    
     var summary: CurrentWeather?
     var forecastList = [ForecastData]()
     
@@ -42,7 +42,7 @@ class WeatherDataSource {
                 self.group.leave()
             }
         }
-
+        
         group.enter()
         apiQueue.async {
             self.fetchForecast(location: location) { (result) in
@@ -74,38 +74,38 @@ class WeatherDataSource {
 extension WeatherDataSource {
     private func fetch<ParsingType: Codable>(urlStr: String, completion: @escaping (Result<ParsingType, Error>) -> ()) {
         print(urlStr)
-
+        
         guard let url = URL(string: urlStr) else {
             completion(.failure(ApiError.invalidUrl(urlStr)))
             return
         }
-
+        
         URLSession.shared.dataTask(with: url) { (data, response, error) -> () in
             if let error = error {
                 completion(.failure(error))
                 return
             }
-
+            
             guard let httpResponse = response as? HTTPURLResponse else {
                 completion(.failure(ApiError.invalidResponse))
                 return
             }
-
+            
             guard httpResponse.statusCode == 200 else {
                 completion(.failure(ApiError.failed(httpResponse.statusCode)))
                 return
-
+                
             }
-
+            
             guard let data = data else {
                 completion(.failure(ApiError.emptyData))
                 return
             }
-
+            
             do {
                 let decoder = JSONDecoder()
                 let data = try decoder.decode(ParsingType.self, from: data)
-
+                
                 completion(.success(data))
             } catch {
                 completion(.failure(error))
@@ -117,19 +117,19 @@ extension WeatherDataSource {
 extension WeatherDataSource {
     private func fetchCurrentWeather(cityName: String, completion: @escaping (Result<CurrentWeather, Error>) -> ()) {
         // https://openweathermap.org
-        let urlStr = "\(weatherUrl)&q=\(cityName)"
+        let urlStr = "\(APIManager().weatherUrl)&q=\(cityName)"
         
         fetch(urlStr: urlStr, completion: completion)
     }
     
     private func fetchCurrentWeather(cityId: Int, completion: @escaping (Result<CurrentWeather, Error>) -> ()) {
-        let urlStr = "\(weatherUrl)&id=\(cityId)"
+        let urlStr = "\(APIManager().weatherUrl)&id=\(cityId)"
         
         fetch(urlStr: urlStr, completion: completion)
     }
     
     private func fetchCurrentWeather(location: CLLocation, completion: @escaping (Result<CurrentWeather, Error>) -> ()) {
-        let urlStr = "\(weatherUrl)&lat=\(location.coordinate.latitude)&lon=\(location.coordinate.longitude)"
+        let urlStr = "\(APIManager().weatherUrl)&lat=\(location.coordinate.latitude)&lon=\(location.coordinate.longitude)"
         
         fetch(urlStr: urlStr, completion: completion)
     }
@@ -139,19 +139,19 @@ extension WeatherDataSource {
 extension WeatherDataSource {
     private func fetchForecast(cityName: String, completion: @escaping (Result<Forecast, Error>) -> ()) {
         // https://openweathermap.org
-        let urlStr = "\(forecastUrl)&q=\(cityName)"
+        let urlStr = "\(APIManager().forecastUrl)&q=\(cityName)"
         
         fetch(urlStr: urlStr, completion: completion)
     }
     
     private func fetchForecast(cityId: Int, completion: @escaping (Result<Forecast, Error>) -> ()) {
-        let urlStr = "\(forecastUrl)&id=\(cityId)"
+        let urlStr = "\(APIManager().forecastUrl)&id=\(cityId)"
         
         fetch(urlStr: urlStr, completion: completion)
     }
     
     private func fetchForecast(location: CLLocation, completion: @escaping (Result<Forecast, Error>) -> ()) {
-        let urlStr = "\(forecastUrl)&lat=\(location.coordinate.latitude)&lon=\(location.coordinate.longitude)"
+        let urlStr = "\(APIManager().forecastUrl)&lat=\(location.coordinate.latitude)&lon=\(location.coordinate.longitude)"
         
         fetch(urlStr: urlStr, completion: completion)
     }

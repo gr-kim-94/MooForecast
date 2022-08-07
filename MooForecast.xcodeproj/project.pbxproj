@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F443E5E3267867000012B40D /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = F443E5E2267867000012B40D /* Common.swift */; };
+		F40E2C8B289F9834002504A3 /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40E2C8A289F9834002504A3 /* APIManager.swift */; };
+		F40E2C8F289F9A66002504A3 /* Secrets.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = F40E2C8E289F9A66002504A3 /* Secrets.xcconfig */; };
 		F443E5E626788BF00012B40D /* SummaryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F443E5E526788BF00012B40D /* SummaryTableViewCell.swift */; };
 		F443E5E826788C040012B40D /* ForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F443E5E726788C040012B40D /* ForecastTableViewCell.swift */; };
 		F461E6CD268370F300752DCA /* ApiError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F461E6CC268370F300752DCA /* ApiError.swift */; };
@@ -26,14 +27,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F443E5E2267867000012B40D /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		F40E2C8A289F9834002504A3 /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
+		F40E2C8E289F9A66002504A3 /* Secrets.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		F443E5E526788BF00012B40D /* SummaryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryTableViewCell.swift; sourceTree = "<group>"; };
 		F443E5E726788C040012B40D /* ForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastTableViewCell.swift; sourceTree = "<group>"; };
 		F461E6CC268370F300752DCA /* ApiError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiError.swift; sourceTree = "<group>"; };
 		F461E6CE2683710B00752DCA /* CurrentWether.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWether.swift; sourceTree = "<group>"; };
 		F461E6D02683711C00752DCA /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		F461E6D32683713A00752DCA /* WeatherDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataSource.swift; sourceTree = "<group>"; };
-		F461E6D6268387A800752DCA /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		F4E99FA726765EA00031BD87 /* MooForecast.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MooForecast.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4E99FAA26765EA00031BD87 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4E99FAC26765EA00031BD87 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,7 +89,7 @@
 		F461E6D52683879B00752DCA /* Api */ = {
 			isa = PBXGroup;
 			children = (
-				F461E6D6268387A800752DCA /* MyPlayground.playground */,
+				F40E2C8A289F9834002504A3 /* APIManager.swift */,
 			);
 			path = Api;
 			sourceTree = "<group>";
@@ -125,7 +126,7 @@
 				F4E99FB326765EA10031BD87 /* Assets.xcassets */,
 				F4E99FB526765EA10031BD87 /* LaunchScreen.storyboard */,
 				F4E99FB826765EA10031BD87 /* Info.plist */,
-				F443E5E2267867000012B40D /* Common.swift */,
+				F40E2C8E289F9A66002504A3 /* Secrets.xcconfig */,
 			);
 			path = MooForecast;
 			sourceTree = "<group>";
@@ -204,6 +205,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F40E2C8F289F9A66002504A3 /* Secrets.xcconfig in Resources */,
 				F4E99FB726765EA10031BD87 /* LaunchScreen.storyboard in Resources */,
 				F4E99FB426765EA10031BD87 /* Assets.xcassets in Resources */,
 				F4E99FB226765EA00031BD87 /* Main.storyboard in Resources */,
@@ -222,7 +224,7 @@
 				F443E5E826788C040012B40D /* ForecastTableViewCell.swift in Sources */,
 				F4F22307268459C300A6E140 /* Double+Formatter.swift in Sources */,
 				F4F2230926845CA800A6E140 /* Date+Formatter.swift in Sources */,
-				F443E5E3267867000012B40D /* Common.swift in Sources */,
+				F40E2C8B289F9834002504A3 /* APIManager.swift in Sources */,
 				F461E6D12683711C00752DCA /* Forecast.swift in Sources */,
 				F4E99FAF26765EA00031BD87 /* ViewController.swift in Sources */,
 				F4E99FAB26765EA00031BD87 /* AppDelegate.swift in Sources */,
@@ -257,6 +259,7 @@
 /* Begin XCBuildConfiguration section */
 		F4E99FB926765EA10031BD87 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F40E2C8E289F9A66002504A3 /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;

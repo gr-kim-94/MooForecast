@@ -8,7 +8,7 @@
 import UIKit
 
 class ForecastTableViewCell: UITableViewCell {
-
+    
     static let identifier = "ForecastTableViewCell"
     
     @IBOutlet weak var dateLabel: UILabel!
@@ -21,11 +21,12 @@ class ForecastTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
+    
+    func setData(forecast: ForecastData) {
+        self.dateLabel.text = forecast.date.dateString
+        self.timeLabel.text = forecast.date.timeString
+        self.weatherImageView.image = UIImage(named: forecast.icon)
+        self.statusLabel.text = forecast.weather
+        self.temperatureLabel.text = forecast.temperature.temperatureString
     }
-
 }
